@@ -1,0 +1,26 @@
+.check-foc:focus {
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+.grow {
+  flex-grow: 2 !important;
+}
+
+.view-icon {
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.fill-accent-secondary {
+  fill: var(--accent-secondary, #50e3c2) !important;
+}
+
+.h-8 {
+  height: 32px;
+}
+
+.w-8 {
+  max-width: 32px !important;
+}

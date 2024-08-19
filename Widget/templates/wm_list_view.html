@@ -1,0 +1,117 @@
+<div class="bg-white shadow overflow-auto sm:rounded-lg">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-lg text-gray-500 uppercase tracking-wider"
+        >
+          ${Type}
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-lg text-gray-500 uppercase tracking-wider"
+        >
+          ${Room Name}
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-lg text-gray-500 uppercase tracking-wider"
+        >
+          ${Floor}
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-lg text-gray-500 uppercase tracking-wider"
+        >
+          ${Capacity}
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-lg text-gray-500 uppercase tracking-wider"
+        >
+          ${Location}
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-lg text-gray-500 uppercase tracking-wider"
+        >
+          ${Free Times}
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 font-normal">
+      <tr ng-repeat="room in data.rooms" ng-if="showBooked(room)">
+        <td
+          class="px-6 py-4 whitespace-nowrap text-lg text-gray-500 flex flex-row items-center gap-4"
+        >
+          <div ng-if="room.type == 'desk'" ng-include="'desk_icon.svg'" />
+          <div ng-if="room.type == 'room'" ng-include="'meeting_icon.svg'" />
+          {{ room.type_display }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-900">
+          {{ room.name }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">
+          {{ room.floor }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">
+          {{ room.capacity }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">
+          {{ room.location }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">
+          <div>
+            <!--ng-repeat="reservation in room.reservations"-->
+            <span
+              ng-if="!room.allowedTimes || !room.allowedTimes.length"
+              class="p-4 rounded bg-red-200 text-red-800 cursor-not-allowed"
+              >${Booked all day}</span
+            >
+          </div>
+
+          <p
+            ng-if="room.allowedTimes && room.allowedTimes.length &&
+                    room.allowedTimes[0].end != '23:59:59'"
+            ng-click="openSeeReservationModal(room)"
+            class="text-blue-800 hover:text-blue-600"
+          >
+            ${See Available Times}
+          </p>
+          <p
+            ng-if="room.allowedTimes && room.allowedTimes.length &&
+                    room.allowedTimes[0].start === '00:00:00' && room.allowedTimes[0].end === '23:59:59'"
+            ng-click="openNewReservationModal(room, {end:'23:59',start:'00:00:00'})"
+            class="text-lime-700 hover:text-lime-500"
+          >
+            ${All day available}
+          </p>
+        </td>
+        <td class="px-6 py-4 text-right">
+          <button
+            ng-click="openNewReservationModal(room)"
+            class="px-4 py-2 bg-lime-700 text-white rounded-md hover:bg-lime-600"
+            ng-disabled="reservation.all_day"
+            ng-if="room.allowedTimes
+                         && room.allowedTimes.length"
+          >
+            ${Reserve}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div ng-if="!data.rooms || !data.rooms.length">
+    <div class="flex flex-col items-center justify-center mt-8 px-4">
+      <h2 class="font-semibold mt-4 text-center px-4 mb-8">
+        ${There are no rooms available with this filter}
+      </h2>
+      <div>
+        <img src="/x_lest_wm.empty-room.svg" class="h-28 md:h-96 pb-8" />
+      </div>
+    </div>
+  </div>
+</div>

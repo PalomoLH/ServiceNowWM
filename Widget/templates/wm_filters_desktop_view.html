@@ -1,0 +1,75 @@
+<form
+  class="flex flex-col md:flex-row items-center mb-4 gap-2"
+  ng-submit="filterRooms()"
+>
+  <div class="flex grow space-x-4">
+    <div>
+      <label class="block text-gray-700">${Date}</label>
+      <input
+        type="date"
+        ng-model="filters.date"
+        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg"
+      />
+    </div>
+    <div>
+      <label class="block text-gray-700">${Floor}</label>
+      <input
+        type="text"
+        ng-model="filters.floor"
+        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg"
+      />
+    </div>
+    <div>
+      <label class="block text-gray-700">${Capacity}</label>
+      <input
+        type="number"
+        ng-model="filters.capacity"
+        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg"
+      />
+    </div>
+    <div>
+      <label class="block text-gray-700">${Name}</label>
+      <input
+        type="text"
+        ng-model="filters.name"
+        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg"
+      />
+    </div>
+    <div>
+      <label class="block text-gray-700">${Type}</label>
+      <select
+        name="type"
+        id="type"
+        ng-model="filters.type"
+        class="px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="all" class="px-3 py-2 bg-white">${All}</option>
+        <option value="room" class="px-3 py-2 bg-white">${Room}</option>
+        <option value="desk" class="px-3 py-2 bg-white">${Desk}</option>
+      </select>
+    </div>
+    <div class="">
+      <label class="text-gray-700">${Show Booked}</label>
+      <input
+        type="checkbox"
+        ng-model="filters.unavailable"
+        class="mt-1 block w-full px-3 py-2 bg-white sm:text-lg check-foc"
+      />
+    </div>
+  </div>
+  <div class="flex justify-end space-x-4 flex-shrink-0">
+    <button
+      type="submit"
+      class="px-4 py-2 bg-accent-secondary text-white rounded-md hover:opacity-80"
+    >
+      ${Filter}
+    </button>
+    <button
+      ng-click="clearFilters()"
+      ng-show="!compareFilters()"
+      class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-400"
+    >
+      ${Clear}
+    </button>
+  </div>
+</form>

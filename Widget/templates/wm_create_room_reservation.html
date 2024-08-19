@@ -1,0 +1,106 @@
+<div class="modal-header">
+  <h3 class="modal-title">${New Reservation}</h3>
+</div>
+<div class="modal-body">
+  <div class="w-full p-4 bg-blue-200 text-black rounded-4 mb-4">
+    <span class="text-lg font-normal">
+      ${Attention: More than 1 day reservations are allowed, please just set end
+      date for a day in the future and you can book the room for multiple days}
+    </span>
+  </div>
+  <form>
+    <div class="form-group">
+      <label for="location">${Location}</label>
+      <input
+        type="string"
+        id="location"
+        ng-model="newReservation.location_label"
+        class="form-control"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label for="room">${Room}</label>
+      <input
+        type="string"
+        id="room"
+        ng-model="newReservation.room_label"
+        class="form-control"
+        disabled
+      />
+    </div>
+    <div
+      class="form-group"
+      ng-if="!newReservation.reservation_start &&
+                                   !newReservation.reservation_end"
+    >
+      <label for="whole_day">${Reserve for the day(s)}</label>
+      <br />
+      <input
+        type="checkbox"
+        id="all_day"
+        ng-model="newReservation.all_day"
+        class=""
+      />
+    </div>
+    <div ng-show="!newReservation.all_day">
+      <div class="form-group">
+        <label for="start">${From}</label>
+        <input
+          type="datetime-local"
+          id="start"
+          ng-model="newReservation.reservation_start"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="end">${To}</label>
+        <input
+          type="datetime-local"
+          id="end"
+          ng-model="newReservation.reservation_end"
+          class="form-control"
+          required
+        />
+      </div>
+    </div>
+    <div ng-show="newReservation.all_day">
+      <div class="form-group">
+        <label for="start">${From}</label>
+        <input
+          type="date"
+          id="start"
+          ng-model="newReservation.reservation_start"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="end">${To}</label>
+        <input
+          type="date"
+          id="end"
+          ng-model="newReservation.reservation_end"
+          class="form-control"
+          required
+        />
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    class="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-600"
+    ng-click="cancel()"
+  >
+    ${Cancel}
+  </button>
+  <button
+    class="px-4 py-2 bg-lime-700 text-white rounded-md hover:bg-lime-600"
+    ng-click="createReservation()"
+    ng-disabled="checkModalDisabled()"
+  >
+    ${Create}
+  </button>
+</div>

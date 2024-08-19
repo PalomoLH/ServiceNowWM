@@ -1,0 +1,85 @@
+<div
+  class="bg-white shadow overflow-auto sm:rounded-lg p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+>
+  <div
+    ng-repeat="room in data.rooms"
+    ng-if="showBooked(room)"
+    class="border border-gray-200 rounded-lg p-4"
+  >
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div
+          ng-if="room.type == 'desk'"
+          ng-include="'desk_icon.svg'"
+          class="h-8 w-8"
+          uib-tooltip="${Desk}"
+        ></div>
+        <div
+          ng-if="room.type == 'room'"
+          ng-include="'meeting_icon.svg'"
+          class="h-8 w-8"
+          uib-tooltip="${Meeting Room}"
+        ></div>
+        <h2 class="text-lg font-semibold text-gray-900">{{ room.name }}</h2>
+      </div>
+      <div class="flex flex-wrap justify-end items-center gap-2">
+        <span
+          class="inline-block bg-gray-200 text-gray-800 text-base px-2 py-1 rounded"
+          uib-tooltip="${Floor}"
+          >{{ room.floor }}</span
+        >
+        <span
+          class="inline-block bg-gray-200 text-gray-800 text-base px-2 py-1 rounded"
+          uib-tooltip="${Capacity}"
+          >{{ room.capacity }}</span
+        >
+      </div>
+    </div>
+    <div class="mt-4">
+      <div>
+        <!-- ng-repeat="reservation in room.reservations" -->
+        <span
+          ng-if="!room.allowedTimes || !room.allowedTimes.length"
+          class="block p-2 rounded bg-red-200 text-red-800 cursor-not-allowed"
+          >${Booked all day}</span
+        >
+      </div>
+      <p
+        ng-if="room.allowedTimes && room.allowedTimes.length && room.allowedTimes[0].end != '23:59:59'"
+        ng-click="openSeeReservationModal(room)"
+        class="mt-6 text-blue-800 hover:text-blue-600 cursor-pointer"
+      >
+        ${See Available Times}
+      </p>
+      <p
+        ng-if="room.allowedTimes && room.allowedTimes.length && room.allowedTimes[0].start === '00:00:00' && room.allowedTimes[0].end === '23:59:59'"
+        ng-click="openNewReservationModal(room, {end:'23:59',start:'00:00:00'})"
+        class="mt-6 text-lime-700 hover:text-lime-500 cursor-pointer"
+      >
+        ${All day available}
+      </p>
+    </div>
+    <div class="mt-4 text-right">
+      <button
+        ng-click="openNewReservationModal(room)"
+        class="px-4 py-2 bg-lime-700 text-white rounded-md hover:bg-lime-600"
+        ng-disabled="reservation.all_day"
+        ng-if="room.allowedTimes && room.allowedTimes.length"
+      >
+        ${Reserve}
+      </button>
+    </div>
+  </div>
+
+  <div
+    ng-if="!data.rooms || !data.rooms.length"
+    class="col-span-full flex flex-col items-center justify-center mt-8 px-4"
+  >
+    <h2 class="font-semibold mt-4 text-center px-4 mb-8">
+      ${There are no rooms available with this filter}
+    </h2>
+    <div>
+      <img src="/x_lest_wm.empty-room.svg" class="h-28 md:h-96 pb-8" />
+    </div>
+  </div>
+</div>

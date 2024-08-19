@@ -1,0 +1,36 @@
+<div class="modal-header flex items-center">
+  <h3 class="modal-title">{{ 'Floors Plans' }}</h3>
+  <button class="text-neutral-700 ml-auto" ng-click="closeFloorModal()">
+    &times;
+  </button>
+</div>
+<div class="modal-body">
+  <div class="tabs">
+    <!-- Tabs for selecting floors -->
+    <ul class="nav nav-tabs">
+      <li
+        ng-repeat="floor in data.floors"
+        ng-class="{'active': $index === selectedFloorIndex}"
+      >
+        <a href="" ng-click="selectFloor($index)">{{ floor.name }}</a>
+      </li>
+    </ul>
+    <!-- Content for the selected floor -->
+    <div class="tab-content">
+      <div
+        ng-repeat="floor in data.floors"
+        ng-show="$index === selectedFloorIndex"
+      >
+        <img ng-src="{{floor.content}}" height="420" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    class="px-4 py-2 text-neutral-700 rounded-md"
+    ng-click="closeFloorModal()"
+  >
+    {{ 'Close' }}
+  </button>
+</div>
